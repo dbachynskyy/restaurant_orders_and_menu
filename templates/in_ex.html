@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtered Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        h3 {
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        li {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h5 {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        select, input[type="submit"] {
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h3>Filtered Orders</h3>
+
+    {% if alr_filtered %}
+        <ul>
+            {% for order in orders %}
+                <li>
+                    Order #{{ order.id }}, Total: {{ order.total }}, Timestamp: {{ order.timestamp }}, Status:  
+                    {% if order.status == True %}
+                        Completed
+                    {% else %}
+                        In progress 
+                    {% endif %}
+                    {% for odj_instance in odj %}
+                        {% if order.id == odj_instance.order_id %}
+                            {% for dessert in desserts %}
+                                {% if dessert.id == odj_instance.dessert_id %}
+                                    <h5>{{ dessert.name }} - {{ odj_instance.quantity }}</h5>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </li>
+            {% endfor %}
+        </ul>
+        <p><a href="/orders">Back to Full List</a></p>
+    {% endif %}
+
+    <form action="/filter_orders/in_ex" method="POST">
+        <label for="sign">Filter by:</label>
+        <select name="in_or_ex" id="sign">
+            <option value="includes">Includes</option>
+            <option value="excludes">Excludes</option>
+        </select>
+
+        <label for="name">Select Item:</label>
+        <select name="item" id="name">
+            {% for dessert in desserts %}
+                <option value="{{ dessert.id }}">{{ dessert.name }}</option>
+            {% endfor %}
+        </select>
+
+        <input type="submit" value="Filter"/>
+    </form>
+</body>
+</html>

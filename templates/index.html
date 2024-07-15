@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        h3 {
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #fff;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .btn {
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #007bff;
+            border-radius: 3px;
+            color: #007bff;
+            background-color: transparent;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .btn:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h3>Menu</h3>
+
+    <ul>
+        {% for dessert in desserts %}
+            <li class="menu-item">
+                <div>
+                    <span>{{ dessert.name }}</span> - ${{ dessert.price }}, {{ dessert.calories }} calories
+                </div>
+                <div>
+                    <a href="/update/{{dessert.id}}" class="btn">Update</a>
+                    <a href="/delete/{{dessert.id}}" class="btn">Delete</a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="/add" class="btn">Add Item</a>
+    <a href="/filter" class="btn">Filter Items</a>
+    <a href="/orders" class="btn">View Orders</a>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        h3 {
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        li {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h5 {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .btn {
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #007bff;
+            border-radius: 3px;
+            color: #007bff;
+            background-color: transparent;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .btn:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h3>Orders</h3>
+
+    <form action="/" method="POST">
+        <ul>
+            {% for order in orders %}
+                <li>
+                    Order #{{ order.id }}, Total: {{ order.total }}, Timestamp: {{ order.timestamp }}, Status:  
+                    {% if order.status == True %}
+                        Completed
+                    {% else %}
+                        In progress 
+                        <a href="/update_order/{{ order.id }}" class="btn btn-outline-secondary btn-sm">Order finished</a>
+                    {% endif %}
+                    {% for odj_instance in odj %}
+                        {% if order.id == odj_instance.order_id %}
+                            {% for dessert in desserts %}
+                                {% if dessert.id == odj_instance.dessert_id %}
+                                    <h5>{{ dessert.name }} - {{ odj_instance.quantity }}</h5>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </li>
+            {% endfor %}
+        </ul>
+    </form>
+
+    <p><a href="/">Back to Dessert List</a></p>
+    <p><a href="/filter_orders">Filter orders</a></p>
+</body>
+</html>

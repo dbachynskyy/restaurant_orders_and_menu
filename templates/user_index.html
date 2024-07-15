@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        h3 {
+            color: #333;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        input[type="number"] {
+            width: 60px;
+            padding: 8px;
+            margin-left: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h3>Menu</h3>
+
+    {% if alr_added %}
+        <div class="confirmation-box">
+            <p>Successfully ordered!</p>
+        </div>
+    {% endif %}
+
+    <form action="/" method="POST">
+        <ul>
+            {% for dessert in desserts %}
+                <li>{{ dessert.name }} - ${{ dessert.price }}, {{ dessert.calories }} calories 
+                    <input id="{{dessert.id}}" name="{{dessert.id}}_quantity" type="number" value="0" min="0" step="1">
+                </li>
+            {% endfor %}
+        </ul>
+        <input type="submit" value="Add Order"/>
+    </form>
+</body>
+</html>

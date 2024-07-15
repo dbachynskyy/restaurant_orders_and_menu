@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Dessert</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        h3 {
+            color: #333;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+        input[type="text"], input[type="submit"] {
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h3>Add Dessert</h3>
+
+    {% if dessert %}
+        <div class="confirmation-box">
+            <p><strong>{{ dessert.name }}</strong> successfully created! Add another below.</p>
+        </div>
+    {% endif %}
+
+    <form action="/add" method="POST">
+        <label for="name_id">Name:</label>
+        <input id="name_id" name="name_field" type="text" />
+
+        <label for="price_id">Price:</label>
+        <input id="price_id" name="price_field" type="text" size="4" />
+
+        <label for="cals_id">Calories:</label>
+        <input id="cals_id" name="cals_field" type="text" size="4" />
+
+        <input type="submit" value="Add"/>
+    </form>
+    
+    <p><a href="/">Back to Full List</a></p>
+</body>
+</html>
