@@ -1,6 +1,6 @@
 # restaurant_orders_and_menu
 
-first run the:\n
+first run the:/n
 python relative_path/models.py or python3 relative_path/models.py
 this will initiate a db
 Then run:
